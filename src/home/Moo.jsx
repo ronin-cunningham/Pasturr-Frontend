@@ -28,14 +28,22 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
         return result.toISOString().split('T')[0];   
     };
 
-
+    // !!! Get ruchit to pass in tags from Moos
+    const tempTags = ["tag1", "tag2"]
     return <Container >
         <Card align="left" style={{ width: '30rem', margin: "20px" }}>
             <Card.Body>
 
                 <Container style={{ marginBottom:"30px"}} onClick={handleClick}>
+                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                     <Card.Title>@{handle}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{parseMySQLTime(mooTime)}</Card.Subtitle>
+                    <div>
+                        <Card.Subtitle className="mb-2 text-muted">{parseMySQLTime(mooTime)}</Card.Subtitle>
+                        <Card.Subtitle className="mb-2 text-muted">{tempTags.map(tag => {
+                            return `#${tag} `
+                        })}</Card.Subtitle>
+                    </div>
+                    </div>
                 </Container>
                     <Card.Text>
                         {content}

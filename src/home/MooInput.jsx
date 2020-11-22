@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Card, Button, Container, Row, Col, Form } from "react-bootstrap";
+import { TagCheckboxes } from "./TagCheckboxes";
 
 export const MooInput = ({ updateList }) => {
 
     const [handle, setHandle] = useState("");
     const [message, setMessage] = useState("");
+    const [checkedTags, setCheckedTags] = useState([""]);
 
     // Example POST method implementation:
     const postMoo = async (data) => {
@@ -32,18 +34,20 @@ export const MooInput = ({ updateList }) => {
     const handleSubmit = () => {
         const inputObject = { 
             content: message,
-            handle: handle
+            handle: handle,
+            tags: checkedTags
          };
         
         makeMoo(inputObject);
     };
 
 
-    return <Card align="left" style={{ height: "60%", width: '30rem', margin: "20px 20px 100px 20px" }}>
+    return <Card align="left" style={{ width: '30rem', margin: "20px 20px 100px 20px" }}>
     <Card.Body>
     <Card.Title>Make a Moo</Card.Title>
     <Card.Text>
         <Form>
+
         <Form.Group controlId="formBasicEmail">
             <Form.Control type="email" placeholder="handle" onChange={(e) => setHandle(e.target.value)}/>
             <Form.Text className="text-muted">
@@ -58,6 +62,11 @@ export const MooInput = ({ updateList }) => {
                 What's up on the Pasture?
             </Form.Text>
         </Form.Group>
+
+        <Form.Group >
+            <TagCheckboxes checkedTags={checkedTags} setCheckedTags={setCheckedTags} />
+        </Form.Group>
+
         </Form>
     </Card.Text>
         <Container align="Center">
