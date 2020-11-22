@@ -7,26 +7,23 @@ export const MooList = () => {
     const [moos, setMoos] = useState([]);
 
     useEffect(() => {
-
-        callApi().then(res => {
-            console.log(res);
-                setMoos(res);
-                }
-            );
+        getMoos();
     }, []);
 
-    const callApi = async() => {
+    const getMoos = async() => {
         const response = await fetch('/api/moo');
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
+        console.log(body)
+        setMoos(body);
         return body;
     };
 
     return <Container align="center">
-            <MooInput mooID={0} handle={"temp"} content={"temp"} />
+            <MooInput updateList={getMoos} />
 
             {moos.map(moo => {
-                return <Moo mooID={moo.mooID} handle={moo.handle} content={moo.content} />
+                return <Moo mooID={moo.mooID} handle={moo.handle} content={moo.content} mooTime={moo.mooTime} />
                 }
             )}
         </Container>
