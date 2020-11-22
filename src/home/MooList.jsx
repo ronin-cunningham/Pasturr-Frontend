@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
+import { Container, Row, Col } from "react-bootstrap";
 import { Moo } from "./Moo";
 import { MooInput } from "./MooInput";
+import { Filters } from "./Filters";
 
 export const MooList = () => {
     const [moos, setMoos] = useState([]);
@@ -20,8 +21,12 @@ export const MooList = () => {
     };
 
     return <Container align="center">
+        <Container>
+            <Row>
             <MooInput updateList={getMoos} />
-
+            <Filters />
+            </Row>
+        </Container>
             {moos.map(moo => {
                 return <Moo mooID={moo.mooID} handle={moo.handle} content={moo.content} mooTime={moo.mooTime} />
                 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container } from "react-bootstrap";
-import { TagInput } from "./TagInput";
+import { InputGroup, Card, Container, Row } from "react-bootstrap";
 
-export const Tags = () => {
+
+export const TagCheckboxes = () => {
 
     const [tags, setTags] = useState([]);
 
@@ -21,13 +21,16 @@ export const Tags = () => {
 
     return <Container align="center">
 
-        {tags.map(tag => {
-                return <Card style={{ margin: "20px", width: "10rem"}}>
+            {tags.map(tag => {
+                return <Card style={{ margin: "5px", width: "8rem"}}>
+                    <Container>
+                        <Row>
+                            <InputGroup.Checkbox aria-label="Checkbox for following text input" />
                             {tag.tagName}
+                        </Row>
+                    </Container>
                 </Card>
                 }
             )}
-        
-        <TagInput updateList={getTags} />
     </Container>
 };
