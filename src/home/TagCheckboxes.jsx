@@ -23,11 +23,7 @@ export const TagCheckboxes = ({ checkedTags, setCheckedTags }) => {
 
             {tags.map(tag => {
                 return <Card style={{ margin: "5px", width: "8rem"}}>
-                    <Container>
-                        <Row>
                             <TagCheckbox name={tag.tagName} checkedTags={checkedTags} setCheckedTags={setCheckedTags} />
-                        </Row>
-                    </Container>
                 </Card>
                 }
             )}
