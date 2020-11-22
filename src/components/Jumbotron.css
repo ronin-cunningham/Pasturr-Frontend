@@ -1,0 +1,9 @@
+.jumbo {
+    background-image: url("../assets/jumbotron-image.jpg");
+    background-size: cover;
+    color: white;
+    height: 200px;
+    position: relative;
+    z-index: -50;
+  }
+  

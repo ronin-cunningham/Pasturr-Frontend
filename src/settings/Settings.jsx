@@ -17,7 +17,5 @@ export const Settings = () => {
         return body;
     };
 
-    return (
-        <div>Settings</div>
-    );
+    return <div>Settings</div>
 };
