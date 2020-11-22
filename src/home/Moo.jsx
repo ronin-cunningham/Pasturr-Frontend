@@ -52,6 +52,8 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
         </Card>
 
         {replies.map(reply => {
+            // !!! Change this once ruchit sends the entire reply moo and their contents in the endpoint
+            console.log(reply);
                 return <div>
                     {reply.replyMooID}
                 </div>

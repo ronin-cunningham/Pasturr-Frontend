@@ -16,7 +16,7 @@ export const NavigationBar = () => {
               <Nav.Link href="/">Home</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/settings">Settings</Nav.Link>
+              <Nav.Link href="/tags">Tags</Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
