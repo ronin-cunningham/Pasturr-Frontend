@@ -9,7 +9,6 @@ export const TagInput = ({ updateList }) => {
     // Example POST method implementation:
     const postMoo = async (data) => {
         // Default options are marked with *
-        console.log(data);
         const response = await fetch('/api/tag', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
@@ -26,7 +25,6 @@ export const TagInput = ({ updateList }) => {
             console.log("rip")
         })
         .then(data => {
-          console.log(data); // JSON data parsed by `data.json()` call
           updateList();
         });
     };

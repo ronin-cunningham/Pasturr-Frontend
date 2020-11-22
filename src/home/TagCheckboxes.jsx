@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { InputGroup, Card, Container, Row } from "react-bootstrap";
+import { TagCheckbox } from "./TagCheckbox";
 
 
-export const TagCheckboxes = () => {
+export const TagCheckboxes = ({ checkedTags, setCheckedTags }) => {
 
     const [tags, setTags] = useState([]);
 
@@ -14,7 +15,6 @@ export const TagCheckboxes = () => {
         const response = await fetch('/api/tag');
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
-        console.log(body)
         setTags(body);
         return body;
     };
@@ -25,8 +25,7 @@ export const TagCheckboxes = () => {
                 return <Card style={{ margin: "5px", width: "8rem"}}>
                     <Container>
                         <Row>
-                            <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-                            {tag.tagName}
+                            <TagCheckbox name={tag.tagName} checkedTags={checkedTags} setCheckedTags={setCheckedTags} />
                         </Row>
                     </Container>
                 </Card>

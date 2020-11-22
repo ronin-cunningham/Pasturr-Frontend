@@ -14,7 +14,6 @@ export const Tags = () => {
         const response = await fetch('/api/tag');
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
-        console.log(body)
         setTags(body);
         return body;
     };

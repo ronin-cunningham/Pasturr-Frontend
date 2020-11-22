@@ -4,47 +4,28 @@ import { TagCheckboxes } from "./TagCheckboxes";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export const Filters = ({ updateList }) => {
+export const Filters = ({ getFilteredMoos, getMoos }) => {
     const [startDate, setStartDate] = useState(new Date());
     const [handle, setHandle] = useState("");
-    const [message, setMessage] = useState("");
+    const [checkedTags, setCheckedTags] = useState([""]);
 
-    useEffect(() => {
-        console.log(startDate)
-    }, [startDate])
 
-    // Example POST method implementation:
-    const postMoo = async (data) => {
-        // Default options are marked with *
-        console.log(data);
-        const response = await fetch('/api/moo', {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-            });
-        return response.json(); // parses JSON response into native JavaScript objects
-    };
   
-    const makeMoo = (inputObject) => {
-        postMoo(inputObject)
-        .catch((e) => {
-            console.log("rip")
-        })
-        .then(data => {
-          console.log(data); // JSON data parsed by `data.json()` call
-          updateList();
-        });
-    };
+ 
 
-    const handleSubmit = () => {
-        const inputObject = { 
-            content: message,
-            handle: handle
-         };
-        
-        makeMoo(inputObject);
+    const handleSearch = () => {
+        if (handle === "") {
+            getMoos();
+        }
+        else {
+            const inputObject = {
+                handle: handle,
+                mooTime: startDate.toJSON().slice(0, 19).replace('T', ' '),
+                tags: checkedTags
+            };
+            
+            getFilteredMoos(inputObject);
+        }
     };
 
 
@@ -64,14 +45,14 @@ export const Filters = ({ updateList }) => {
         </Form.Group>
 
         <Form.Group >
-            <TagCheckboxes />
+            <TagCheckboxes checkedTags={checkedTags} setCheckedTags={setCheckedTags} />
         </Form.Group>
 
         </Form>
     </Card.Text>
         <Container align="Center">
             <Row>
-                <Col><Button onClick={handleSubmit} style={{ width:"80%" }} variant="outline-dark" size="sm">Search!</Button></Col>
+                <Col><Button onClick={handleSearch} style={{ width:"80%" }} variant="outline-dark" size="sm">Search!</Button></Col>
             </Row>
         </Container>
     </Card.Body>

@@ -9,7 +9,6 @@ export const MooInput = ({ updateList }) => {
     // Example POST method implementation:
     const postMoo = async (data) => {
         // Default options are marked with *
-        console.log(data);
         const response = await fetch('/api/moo', {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
@@ -26,7 +25,6 @@ export const MooInput = ({ updateList }) => {
             console.log("rip")
         })
         .then(data => {
-          console.log(data); // JSON data parsed by `data.json()` call
           updateList();
         });
     };

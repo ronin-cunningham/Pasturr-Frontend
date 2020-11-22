@@ -12,7 +12,6 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
         const response = await fetch(`/api/replies?mooID=${mooID}`);
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
-        console.log(body)
         setReplies(body);
         return body;
     };
@@ -53,7 +52,6 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
 
         {replies.map(reply => {
             // !!! Change this once ruchit sends the entire reply moo and their contents in the endpoint
-            console.log(reply);
                 return <div>
                     {reply.replyMooID}
                 </div>

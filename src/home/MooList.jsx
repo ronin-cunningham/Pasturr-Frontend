@@ -15,16 +15,32 @@ export const MooList = () => {
         const response = await fetch('/api/moo');
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
-        console.log(body)
         setMoos(body);
         return body;
     };
+
+    // Example POST method implementation:
+    const getFilteredMoos = async (data) => {
+        // Default options are marked with *
+        const response = await fetch('/api/filterMoos', {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+        console.log(data)
+        const body = await response.json();
+        console.log(body)
+        setMoos(body)
+    };
+    
 
     return <Container align="center">
         <Container>
             <Row>
             <MooInput updateList={getMoos} />
-            <Filters />
+            <Filters getFilteredMoos={getFilteredMoos} getMoos={getMoos} />
             </Row>
         </Container>
             {moos.map(moo => {
