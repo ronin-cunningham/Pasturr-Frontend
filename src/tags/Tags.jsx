@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Container, Row } from "react-bootstrap";
 import { TagInput } from "./TagInput";
 import { TagAnalytics } from "./TagAnalytics";
+import { TagSearchBar } from "./TagSearchBar";
 
 export const Tags = () => {
 
@@ -19,11 +20,25 @@ export const Tags = () => {
         return body;
     };
 
+    const getFilteredTags = async (tagName) => {
+        // Default options are marked with *
+        const response = await fetch(`/api/tagMatch?tagName=${tagName}`, {
+            method: 'GET', 
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        const body = await response.json();
+        setTags(body)
+    };
+
     return <Container align="center">
+
         <div style={{ display:"flex", justifyContent:"space-around"}}>
             <TagInput updateList={getTags} />
             <TagAnalytics />
         </div>
+
+        <TagSearchBar getFilteredTags={getFilteredTags} />
 
         {tags.map(tag => {
                 return <Card style={{ margin: "20px", width: "10rem"}}>
@@ -32,6 +47,5 @@ export const Tags = () => {
                 }
             )}
         
-
     </Container>
 };

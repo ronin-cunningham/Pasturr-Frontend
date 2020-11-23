@@ -113,7 +113,6 @@ export const Moo = ({ mooID, handle, content, mooTime, likeProp, updateList }) =
         </Card>
 
         {replies.map(reply => {
-            // !!! Change this once ruchit sends the entire reply moo and their contents in the endpoint
                 return <div style={{ width:"40%"}}>
                     <Moo mooID={reply.replymooID} handle={reply.handle} content={reply.content} mooTime={reply.mooTime} likeProp={reply.likeCount}
                     updateList={updateList} />
