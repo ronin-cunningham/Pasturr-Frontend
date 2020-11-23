@@ -6,21 +6,25 @@ export const TagAnalytics = ({ updateList }) => {
     const [userTags, setUserTags] = useState([]);
     const [tagsGreaterThanFreq, setTagsGreaterThanFreq] = useState([]);
 
-    const handleClick = async () => {
+    const handleClickPopular = async () => {
+
+
+        const response = await fetch(`/api/tagFrequency?count=${count}`);
+        const body = await response.json();
+
+        console.log(body)
+        if (response.status !== 200) throw Error("didn't work");
+        setTagsGreaterThanFreq(body);
+
+        return body;
+    };
+
+    const handleClickUserFreq = async () => {
         const response = await fetch('/api/userTagFrequency');
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
         setUserTags(body);
-
-        const response2 = await fetch(`/api/tagFrequency?count=${count}`);
-        const body2 = await response2.json();
-
-        console.log(body2)
-        if (response2.status !== 200) throw Error("didn't work");
-        setTagsGreaterThanFreq(body2);
-
-        return body;
-    };
+    }
 
     return <Card align="left" style={{ width: '20rem', margin: "100px 20px 20px 20px" }}>
     <Card.Body>
@@ -41,22 +45,29 @@ export const TagAnalytics = ({ updateList }) => {
 
         <Container align="Center">
             <Row>
-                <Col><Button onClick={() => handleClick()} style={{ width:"80%" }} variant="outline-dark" size="sm">View Trending Tags</Button></Col>
+                <Col><Button onClick={() => handleClickPopular()} style={{ width:"80%", margin:"20px" }} variant="outline-dark" size="sm">View Popular Tags</Button></Col>
             </Row>
         </Container>
 
-    <div style={{ marginTop:"30px"}}>
+    <div>
         <Container align="center">
             <div style={{ margin:"10px"}}>
-                <label>Tags Greater Than Frequency</label>
+                <label>{tagsGreaterThanFreq.length > 0 ? "Tags Greater Than Frequency" : ""}</label>
                 {tagsGreaterThanFreq.map(tag => {
                     return <div>
                         {tag.tagName}: {tag.frequency}
                     </div> 
                 })}
             </div>
+
+            <Container align="Center">
+            <Row>
+                <Col><Button onClick={() => handleClickUserFreq()} style={{ width:"80%", margin:"20px" }} variant="outline-dark" size="sm">View User Tag Activity</Button></Col>
+            </Row>
+        </Container>
+
             <div>
-                <label>Total Tags Users Have Created</label>
+                <label>{userTags.length > 0 ? "Total Tags Users Have Created" : ""}</label>
                 {userTags.map(ut => {
                     return <div>
                         {ut.handle}: {ut.frequency}
