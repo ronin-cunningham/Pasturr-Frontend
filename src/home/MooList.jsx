@@ -16,6 +16,7 @@ export const MooList = () => {
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
         setMoos(body);
+        console.log(body)
         return body;
     };
 
@@ -44,7 +45,8 @@ export const MooList = () => {
             </Row>
         </Container>
             {moos.map(moo => {
-                return <Moo mooID={moo.mooID} handle={moo.handle} content={moo.content} mooTime={moo.mooTime} />
+                console.log(moo)
+                return <Moo mooID={moo.mooID} handle={moo.handle} content={moo.content} mooTime={moo.mooTime} likeProp={moo.likeCount} />
                 }
             )}
         </Container>

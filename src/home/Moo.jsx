@@ -1,8 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 
-export const Moo = ({ mooID, handle, content, mooTime }) => {
+export const Moo = ({ mooID, handle, content, mooTime, likeProp }) => {
     const [replies, setReplies] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [likes, setLikes] = useState(0);
+    const [reMooCount, setReMooCount] = useState(0);
+    const [replyCount, setReplyCount] = useState(0);
+
+    useEffect(() => {
+        getTags(mooID);
+        setLikes(likeProp);
+    }, [mooID, likeProp]);
+
+    const handleLike = async (mooID) => {
+        const response = await fetch(`/api/like?mooID=${mooID}`, {
+            method: 'PUT',
+        }).then(() => {
+            const newLikes = likes + 1;
+            setLikes(newLikes);
+        });
+    };
 
     const handleClick = () => {
         getReplies(mooID);
@@ -13,6 +31,18 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
         const body = await response.json();
         if (response.status !== 200) throw Error("didn't work");
         setReplies(body);
+        return body;
+    };
+
+    const getTags = async (mooID) => {
+        const response = await fetch(`/api/tag?mooID=${mooID}`);
+        const body = await response.json();
+        if (response.status !== 200) throw Error("didn't work");
+        
+        if (typeof body !== "undefined") {
+
+            setTags(body);
+        }
         return body;
     };
 
@@ -28,8 +58,6 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
         return result.toISOString().split('T')[0];   
     };
 
-    // !!! Get ruchit to pass in tags from Moos
-    const tempTags = ["tag1", "tag2"]
     return <Container >
         <Card align="left" style={{ width: '30rem', margin: "20px" }}>
             <Card.Body>
@@ -39,8 +67,8 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
                     <Card.Title>@{handle}</Card.Title>
                     <div>
                         <Card.Subtitle className="mb-2 text-muted">{parseMySQLTime(mooTime)}</Card.Subtitle>
-                        <Card.Subtitle className="mb-2 text-muted">{tempTags.map(tag => {
-                            return `#${tag} `
+                        <Card.Subtitle className="mb-2 text-muted">{tags.map(tag => {
+                            return `#${tag.tagName} `
                         })}</Card.Subtitle>
                     </div>
                     </div>
@@ -50,9 +78,20 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
                     </Card.Text>
                         <Container align="Center">
                             <Row>
-                                <Col><Button variant="outline-dark" size="sm">reply</Button></Col>
-                                <Col><Button variant="outline-dark" size="sm">retweet</Button></Col>
-                                <Col><Button variant="outline-dark" size="sm">like</Button></Col>
+                                <div style={{ width:"100%", display:"flex", justifyContent:"space-around" }}>
+                                    <div style={{ display:"flex", flexDirection:"column" }}>
+                                        {replyCount}
+                                        <Button variant="outline-dark" size="sm">reply</Button>
+                                    </div>
+                                    <div style={{ display:"flex", flexDirection:"column" }}>
+                                        {reMooCount}
+                                        <Button variant="outline-dark" size="sm">reMoo</Button>
+                                    </div>
+                                    <div style={{ display:"flex", flexDirection:"column" }}>
+                                        {likes}
+                                        <Button onClick={() => handleLike(mooID)} variant="outline-dark" size="sm">like</Button>
+                                    </div>
+                                </div>
                             </Row>
                         </Container>
             </Card.Body>
@@ -60,8 +99,8 @@ export const Moo = ({ mooID, handle, content, mooTime }) => {
 
         {replies.map(reply => {
             // !!! Change this once ruchit sends the entire reply moo and their contents in the endpoint
-                return <div>
-                    {reply.replyMooID}
+                return <div style={{ width:"40%"}}>
+                    <Moo mooID={reply.replymooID} handle={reply.handle} content={reply.content} mooTime={reply.mooTime} likeProp={reply.likeCount} />
                 </div>
                 }
             )}
