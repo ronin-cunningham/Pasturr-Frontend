@@ -65,6 +65,8 @@ export const TagInput = ({ updateList }) => {
                 <Col><Button onClick={handleSubmit} style={{ width:"80%" }} variant="outline-dark" size="sm">Create Tag!</Button></Col>
             </Row>
         </Container>
+
+        
     </Card.Body>
 </Card>
 };

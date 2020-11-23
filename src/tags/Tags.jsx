@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, Row } from "react-bootstrap";
 import { TagInput } from "./TagInput";
+import { TagAnalytics } from "./TagAnalytics";
 
 export const Tags = () => {
 
@@ -19,6 +20,10 @@ export const Tags = () => {
     };
 
     return <Container align="center">
+        <div style={{ display:"flex", justifyContent:"space-around"}}>
+            <TagInput updateList={getTags} />
+            <TagAnalytics />
+        </div>
 
         {tags.map(tag => {
                 return <Card style={{ margin: "20px", width: "10rem"}}>
@@ -27,6 +32,6 @@ export const Tags = () => {
                 }
             )}
         
-        <TagInput updateList={getTags} />
+
     </Container>
 };

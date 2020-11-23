@@ -14,10 +14,6 @@ export const Filters = ({ getFilteredMoos, getMoos }) => {
  
 
     const handleSearch = () => {
-        if (handle === "") {
-            getMoos();
-        }
-        else {
             const inputObject = {
                 handle: handle,
                 mooTime: startDate.toJSON().slice(0, 19).replace('T', ' '),
@@ -25,7 +21,7 @@ export const Filters = ({ getFilteredMoos, getMoos }) => {
             };
             
             getFilteredMoos(inputObject);
-        }
+        
     };
 
 

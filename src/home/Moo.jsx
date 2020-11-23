@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 
-export const Moo = ({ mooID, handle, content, mooTime, likeProp }) => {
+export const Moo = ({ mooID, handle, content, mooTime, likeProp, updateList }) => {
     const [replies, setReplies] = useState([]);
     const [tags, setTags] = useState([]);
     const [likes, setLikes] = useState(0);
@@ -12,6 +12,15 @@ export const Moo = ({ mooID, handle, content, mooTime, likeProp }) => {
         getTags(mooID);
         setLikes(likeProp);
     }, [mooID, likeProp]);
+
+    const handleDelete = async (mooID) => {
+        const response = await fetch(`/api/moo?mooID=${mooID}`, {
+            method: 'DELETE'
+        }).then(() => {
+            updateList();
+        });
+    };
+
 
     const handleLike = async (mooID) => {
         const response = await fetch(`/api/like?mooID=${mooID}`, {
@@ -61,7 +70,9 @@ export const Moo = ({ mooID, handle, content, mooTime, likeProp }) => {
     return <Container >
         <Card align="left" style={{ width: '30rem', margin: "20px" }}>
             <Card.Body>
-
+                <div style={{ display:"flex"}}>
+            <Button onClick={() => handleDelete(mooID)} variant="outline-danger">Delete</Button>{' '}
+            </div>
                 <Container style={{ marginBottom:"30px"}} onClick={handleClick}>
                     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                     <Card.Title>@{handle}</Card.Title>
@@ -100,7 +111,8 @@ export const Moo = ({ mooID, handle, content, mooTime, likeProp }) => {
         {replies.map(reply => {
             // !!! Change this once ruchit sends the entire reply moo and their contents in the endpoint
                 return <div style={{ width:"40%"}}>
-                    <Moo mooID={reply.replymooID} handle={reply.handle} content={reply.content} mooTime={reply.mooTime} likeProp={reply.likeCount} />
+                    <Moo mooID={reply.replymooID} handle={reply.handle} content={reply.content} mooTime={reply.mooTime} likeProp={reply.likeCount}
+                    updateList={updateList} />
                 </div>
                 }
             )}
