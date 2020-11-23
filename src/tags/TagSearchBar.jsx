@@ -10,8 +10,8 @@ export const TagSearchBar = ({ getFilteredTags }) => {
     <Card.Text>
         <Form>
 
-        <Form.Group align="center" controlId="formBasicEmail" >
-            <Form.Control style={{ width:"80%" }}type="email" placeholder="handle" onChange={(e) => setSearch(e.target.value)}/>
+        <Form.Group align="center"  >
+            <Form.Control style={{ width:"80%" }} placeholder="handle" onChange={(e) => setSearch(e.target.value)}/>
         </Form.Group>
 
 

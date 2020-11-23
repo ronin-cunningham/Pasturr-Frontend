@@ -12,7 +12,6 @@ export const TagAnalytics = ({ updateList }) => {
         const response = await fetch(`/api/tagFrequency?count=${count}`);
         const body = await response.json();
 
-        console.log(body)
         if (response.status !== 200) throw Error("didn't work");
         setTagsGreaterThanFreq(body);
 
@@ -31,7 +30,7 @@ export const TagAnalytics = ({ updateList }) => {
     <Card.Title>Trending Tags</Card.Title>
     <Card.Text>
         <Form>
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group >
             <Form.Control placeholder="0" onChange={(e) => setCount(e.target.value)} />
             <Form.Text className="text-muted">
                 <div align="center">

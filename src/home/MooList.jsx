@@ -13,7 +13,6 @@ export const MooList = () => {
         const response = await fetch(`/api/moo?region=${region}`);
         const body = await response.json();
 
-        console.log(body)
         if (response.status !== 200) throw Error("didn't work");
         setMoos(body);
         return body;
@@ -22,9 +21,6 @@ export const MooList = () => {
     useEffect(() => {
         getMoos();
     }, [region]);
-
-
-
     
 
     // Example POST method implementation:
@@ -43,7 +39,7 @@ export const MooList = () => {
     
 
     return <Container align="center">
-        <div style={{ display:"flex", justifyContent:"flex-end" }}>
+        <div style={{ display:"flex", justifyContent:"flex-end", marginRight:"17px" }}>
             <DropdownButton id="dropdown-basic-button" title={region}>
                 <Dropdown.Item onClick={() => setRegion("North America")}>North America</Dropdown.Item>
                 <Dropdown.Item onClick={() => setRegion("Europe")}>Europe</Dropdown.Item>
