@@ -70,11 +70,15 @@ export const Moo = ({ mooID, handle, content, mooTime, likeProp, updateList }) =
     return <Container >
         <Card align="left" style={{ width: '30rem', margin: "20px" }}>
             <Card.Body>
-                <div style={{ display:"flex"}}>
-            <Button onClick={() => handleDelete(mooID)} variant="outline-danger">Delete</Button>{' '}
+            <Container>
+                <div style={{ display:"flex", justifyContent:"flex-end", marginBottom:"10px"}}>
+                    
+            <Button onClick={() => handleDelete(mooID)} size="sm" variant="outline-danger">Delete</Button>{' '}
+            
             </div>
+            </Container>
                 <Container style={{ marginBottom:"30px"}} onClick={handleClick}>
-                    <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                    <div style={{ display:"flex", justifyContent:"space-between" }}>
                     <Card.Title>@{handle}</Card.Title>
                     <div>
                         <Card.Subtitle className="mb-2 text-muted">{parseMySQLTime(mooTime)}</Card.Subtitle>
