@@ -1,31 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Toast } from "react-bootstrap";
 
-export const MostFreqMooer = () => {
+export const MostFreqMooer = ({ getPopularUsers, users }) => {
 
     const [show, setShow] = useState(true);
-    const [users, setUsers] = useState("");
+
     const toggleShow = () => setShow(!show);
-
-    const getPopularUsers = async () => {
-        const response = await fetch('/api/popularUser');
-        const body = await response.json();
-
-        console.log(body)
-
-        let usersString = "";
-        for(let i = 0; i < body.length; i++) {
-          const user = body[i];
-          const comma = i === body.length - 1 ? "" : ", and";
-          usersString += ` ${user.handle}${comma}`;
-        }
-
-        setUsers(usersString);
-    };
 
     useEffect(() => {
         getPopularUsers();
-    }, [])
+    }, [getPopularUsers])
 
   return (
     <Row>

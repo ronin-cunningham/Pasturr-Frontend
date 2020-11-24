@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Button, Container, Row, Col, Form } from "react-bootstrap";
 import { TagCheckboxes } from "./TagCheckboxes";
 
-export const MooInput = ({ updateList }) => {
+export const MooInput = ({ updateList, getPopularUsers }) => {
 
     const [handle, setHandle] = useState("");
     const [message, setMessage] = useState("");
@@ -24,10 +24,11 @@ export const MooInput = ({ updateList }) => {
     const makeMoo = (inputObject) => {
         postMoo(inputObject)
         .catch((e) => {
-            console.log("rip")
+            console.log(e);
         })
         .then(data => {
           updateList();
+          getPopularUsers();
         });
     };
 

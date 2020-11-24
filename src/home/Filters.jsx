@@ -16,7 +16,7 @@ export const Filters = ({ getFilteredMoos, getMoos }) => {
     const handleSearch = () => {
             const inputObject = {
                 handle: handle,
-                mooTime: startDate.toJSON().slice(0, 19).replace('T', ' '),
+                mooTime: startDate.toISOString().slice(0, 19).replace('T', ' '),
                 tags: checkedTags
             };
             

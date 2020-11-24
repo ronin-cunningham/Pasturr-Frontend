@@ -5,7 +5,7 @@ import { MooInput } from "./MooInput";
 import { Filters } from "./Filters";
 import { Settings } from "./Settings";
 
-export const MooList = () => {
+export const MooList = ({ getPopularUsers }) => {
     const [moos, setMoos] = useState([]);
     const [region, setRegion] = useState("North America");
 
@@ -48,7 +48,7 @@ export const MooList = () => {
         </div>
         <Container>
             <Row>
-            <MooInput updateList={getMoos} />
+            <MooInput updateList={getMoos} getPopularUsers={getPopularUsers} />
             <Filters getFilteredMoos={getFilteredMoos} getMoos={getMoos} />
             </Row>
         </Container>
